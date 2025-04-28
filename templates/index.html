@@ -1,0 +1,50 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de AFD</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <img src="static/image.png" class="lado izquierdo">
+    <img src="static/image.png" class="lado derecho">
+  <h1>Generador de AFD desde Regex</h1>
+
+  <form method="post">
+    <label>Alfabeto Σ (coma-sep): 
+      <input name="sigma" value="{{ sigma }}" size="30">
+    </label><br><br>
+    <label>Regex ( . para concatenar): 
+      <input name="regex" value="{{ regex }}" size="30">
+    </label><br><br>
+    <button type="submit">Generar AFD</button>
+  </form>
+
+  {% if image %}
+    <hr>
+    <h2>Diagrama AFD</h2>
+    <div class="dfa-img">
+    <img src="{{ url_for('static', filename='resultado_dfa.png') }}" alt="DFA"><br><br>
+    </div>
+
+
+    <form method="post">
+      <input type="hidden" name="sigma" value="{{ sigma }}">
+      <input type="hidden" name="regex" value="{{ regex }}">
+      <label>Palabra a probar: 
+        <input name="test_str" size="20">
+      </label>
+      <button type="submit">▶ Probar</button>    
+      {% if result %}
+      <p>Resultado: 
+        <span style="color: {{ 'green' if accepted else 'red' }}">{{ result }}</span>
+      </p>
+    {% endif %}
+    </form>
+
+    
+
+  {% endif %}
+</body>
+</html>
